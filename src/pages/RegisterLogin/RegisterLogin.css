@@ -1,0 +1,10 @@
+@font-face {
+  font-family: lexend;
+  src: url(../../fonts/Lexend-VariableFont_wght.ttf);
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: lexend, sans-serif;
+}
