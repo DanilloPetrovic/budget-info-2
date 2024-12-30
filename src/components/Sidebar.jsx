@@ -9,7 +9,7 @@ import {
 import React from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import AddAlertIcon from "@mui/icons-material/AddAlert";
+import DescriptionIcon from "@mui/icons-material/Description";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import Divider from "@mui/material/Divider";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -18,7 +18,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const Sidebar = () => {
   const upper = [
     {
-      icon: HomeIcon, // Reference na komponentu
+      icon: HomeIcon,
       name: "Home",
     },
     {
@@ -26,7 +26,7 @@ const Sidebar = () => {
       name: "Expenses",
     },
     {
-      icon: AddAlertIcon,
+      icon: DescriptionIcon,
       name: "Add note",
     },
     {
@@ -73,6 +73,7 @@ const Sidebar = () => {
                   primaryTypographyProps={{
                     fontSize: "1.2rem",
                     color: "primary.contrastText",
+                    fontWeight: "light",
                   }}
                 />
               </ListItemButton>
@@ -95,6 +96,7 @@ const Sidebar = () => {
                   primaryTypographyProps={{
                     fontSize: "1.2rem",
                     color: "primary.contrastText",
+                    fontWeight: "light",
                   }}
                 />
               </ListItemButton>
