@@ -14,8 +14,13 @@ import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import Divider from "@mui/material/Divider";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
   const upper = [
     {
       icon: HomeIcon,
@@ -102,6 +107,18 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
+
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                signOut(auth);
+                localStorage.removeItem("token");
+                navigate("/register");
+              }}
+            >
+              <ListItemText>Log out</ListItemText>
+            </ListItemButton>
+          </ListItem>
         </List>
       </Box>
       <Box sx={{ height: "50%" }}></Box>
