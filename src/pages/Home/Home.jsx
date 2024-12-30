@@ -1,7 +1,8 @@
 import React from "react";
 import "./Home.css";
 import { Navigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import Sidebar from "../../components/Sidebar";
 
 const Home = () => {
   const token = localStorage.getItem("token");
@@ -14,7 +15,9 @@ const Home = () => {
 
   return (
     <Box sx={{ bgcolor: "background.default", heigh: "100vh", width: "100%" }}>
-      <Sidebar />
+      <Box sx={{ width: "20%" }}>
+        <Sidebar />
+      </Box>
     </Box>
   );
 };
