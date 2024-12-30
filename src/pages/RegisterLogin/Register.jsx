@@ -23,10 +23,15 @@ const Register = () => {
         <Box
           component="img"
           src={appLogo}
-          sx={{ width: "100px", height: "100px", borderRadius: "100%" }}
+          width={{ lg: "100px", xs: "80px" }}
+          height={{ lg: "100px", xs: "80px" }}
+          sx={{
+            borderRadius: "100%",
+          }}
         />
         <Typography
           variant="h2"
+          fontSize={{ md: "52px", sm: "48px", xs: "38px" }}
           sx={{ color: "primary.contrastText", fontWeight: "500" }}
         >
           Register
@@ -38,7 +43,7 @@ const Register = () => {
           flexDirection: "column",
           gap: "20px",
           marginTop: "20px",
-          width: "50%",
+          width: { lg: "50%", md: "75%", sm: "90%", xs: "90%" },
         }}
       >
         <TextField
@@ -118,6 +123,7 @@ const Register = () => {
               },
             },
           }}
+          type="password"
         />
       </Box>
 
@@ -138,7 +144,6 @@ const Register = () => {
         variant="contained"
         sx={{
           marginTop: "20px",
-          width: "10%",
           fontSize: "18px",
           bgcolor: "primary.main",
           fontWeight: "500",
