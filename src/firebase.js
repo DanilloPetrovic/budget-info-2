@@ -1,6 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { collection, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { store } from "./store/store";
+import { userSlice } from "./store/userSlice";
+import { getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCscBFAqJCn9keJdQ8221ddXbH-O6vRPzo",
@@ -15,3 +18,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
+export const getUser = async () => {
+  const token = localStorage.getItem("token");
+  try {
+    const data = await getDocs(collection(db, "users"));
+    const filteredData = data.docs.map((doc) => doc.data());
+    const myProfile = filteredData.find((user) => user.uid === token);
+    if (myProfile) {
+      store.dispatch(
+        userSlice.actions.setData({
+          uid: myProfile.uid,
+          username: myProfile.name,
+          email: myProfile.email,
+          expenses: myProfile.expenses,
+          income: myProfile.incomes,
+          incomeCategories: myProfile.incomesCategories,
+          notes: myProfile.notes,
+        })
+      );
+    }
+    return myProfile;
+  } catch (error) {
+    console.error(error);
+  }
+};

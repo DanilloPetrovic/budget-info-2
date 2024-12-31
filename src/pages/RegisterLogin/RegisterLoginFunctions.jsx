@@ -32,6 +32,7 @@ export const registerUser = async (
       expenses: [],
       incomes: [],
       incomesCategories: [],
+      notes: [],
     });
 
     localStorage.setItem("token", userCredential.user.uid);

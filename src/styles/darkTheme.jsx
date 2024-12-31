@@ -5,7 +5,7 @@ import appFont from "../fonts/Lexend-VariableFont_wght.ttf";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#76ABAE", // Glavna boja (npr. za dugmad, naglaske)
+      main: "#76ABAE", //d Glavna boja (npr. za dugmad, naglaske)
       light: "#8bc9cc", // Svetlija nijansa
       dark: "#58898c", // Tamnija nijansa
       contrastText: "#EEEEEE", // Tekst na primarnoj boji

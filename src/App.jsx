@@ -4,8 +4,14 @@ import Register from "./pages/RegisterLogin/Register";
 import Login from "./pages/RegisterLogin/Login";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/darkTheme";
+import { getUser } from "./firebase";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
