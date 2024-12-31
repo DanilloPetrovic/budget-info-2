@@ -6,21 +6,11 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/darkTheme";
 import { getUser } from "./firebase";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 
 function App() {
-  const dispatch = useDispatch();
-  const { uid, name, email, expenses, incomes, incomesCategories } =
-    useSelector((state) => state.user);
-
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      await getUser(dispatch(setData));
-    };
-
-    fetchUserProfile();
-  }, [dispatch]);
+    getUser();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

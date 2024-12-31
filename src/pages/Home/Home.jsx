@@ -3,9 +3,11 @@ import "./Home.css";
 import { Navigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import Sidebar from "../../components/Sidebar";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const token = localStorage.getItem("token");
+  const user = useSelector((state) => state.user);
 
   if (!token) {
     return <Navigate to="/register" replace={true} />;
