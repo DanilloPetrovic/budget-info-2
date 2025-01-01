@@ -23,7 +23,7 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  console.log("User from Redux:", user);
+  console.log(user);
   const upper = [
     {
       icon: HomeIcon,
@@ -68,7 +68,7 @@ const Sidebar = () => {
       <Box sx={{ height: "50%", width: "100%" }}>
         <List>
           {upper.map((listitem) => (
-            <ListItem disablePadding>
+            <ListItem disablePadding key={listitem.name}>
               <ListItemButton>
                 <ListItemIcon>
                   <listitem.icon
@@ -91,7 +91,7 @@ const Sidebar = () => {
           <Divider />
 
           {down.map((listitem) => (
-            <ListItem disablePadding>
+            <ListItem disablePadding key={listitem.name}>
               <ListItemButton>
                 <ListItemIcon>
                   <listitem.icon

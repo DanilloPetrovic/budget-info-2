@@ -32,6 +32,7 @@ export const getUser = async () => {
           username: myProfile.name,
           email: myProfile.email,
           expenses: myProfile.expenses,
+          expensesCategories: myProfile.expensesCategories,
           income: myProfile.incomes,
           incomeCategories: myProfile.incomesCategories,
           notes: myProfile.notes,

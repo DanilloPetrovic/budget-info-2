@@ -30,6 +30,7 @@ export const registerUser = async (
       name: username,
       email: email,
       expenses: [],
+      expensesCategories: [],
       incomes: [],
       incomesCategories: [],
       notes: [],

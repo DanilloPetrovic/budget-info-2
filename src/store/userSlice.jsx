@@ -18,6 +18,7 @@ export const userSlice = createSlice({
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.expenses = action.payload.expenses || [];
+      state.expensesCategories = action.payload.expensesCategories || [];
       state.incomes = action.payload.incomes || [];
       state.incomesCategories = action.payload.incomesCategories || [];
     },

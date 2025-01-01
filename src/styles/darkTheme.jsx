@@ -9,6 +9,7 @@ const theme = createTheme({
       light: "#8bc9cc", // Svetlija nijansa
       dark: "#58898c", // Tamnija nijansa
       contrastText: "#EEEEEE", // Tekst na primarnoj boji
+      greyText: "#d4d4d4",
     },
     background: {
       default: "#222831", // Pozadina aplikacije

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/darkTheme";
 import { getUser } from "./firebase";
 import { useEffect } from "react";
+import AddNote from "./pages/AddNote/AddNote";
 
 function App() {
   useEffect(() => {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/add-note" element={<AddNote />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 import { Navigate } from "react-router-dom";
-import { Box } from "@mui/material";
-import Sidebar from "../../components/Sidebar";
+import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
+import Sidebar from "../../components/Sidebar";
+import Budget from "../../components/HomeComponents/Budget";
+import Notes from "../../components/HomeComponents/Notes";
+import AddIncome from "../../components/HomeComponents/AddIncome";
 
 const Home = () => {
   const token = localStorage.getItem("token");
@@ -14,9 +17,44 @@ const Home = () => {
   }
 
   return (
-    <Box sx={{ bgcolor: "background.default", heigh: "100vh", width: "100%" }}>
+    <Box
+      sx={{
+        bgcolor: "background.default",
+        maxHeight: "100vh",
+        width: "100%",
+        display: "flex",
+      }}
+    >
       <Box sx={{ width: "20%" }}>
         <Sidebar />
+      </Box>
+
+      <Box
+        sx={{
+          width: "80%",
+          maxHeight: "100vh",
+          overflowY: "scroll",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "50px",
+        }}
+      >
+        <Box sx={{ width: "50%", height: "100vh", marginTop: "100px" }}>
+          <Typography
+            variant="h3"
+            sx={{ color: "primary.contrastText", fontWeight: "bold", mb: 4 }}
+          >
+            Home
+          </Typography>
+
+          <Budget user={user} />
+
+          <Notes user={user} />
+
+          <AddIncome user={user} />
+        </Box>
+        <Box sx={{ width: "50%", height: "100vh" }}></Box>
       </Box>
     </Box>
   );

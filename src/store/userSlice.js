@@ -19,6 +19,7 @@ export const userSlice = createSlice({
       state.username = actions.payload.username;
       state.email = actions.payload.email;
       state.expenses = actions.payload.expenses;
+      state.expensesCategories = actions.payload.expensesCategories;
       state.income = actions.payload.income;
       state.incomeCategories = actions.payload.incomeCategories;
       state.notes = actions.payload.notes;
