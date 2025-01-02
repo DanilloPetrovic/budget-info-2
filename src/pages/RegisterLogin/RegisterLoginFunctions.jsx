@@ -34,6 +34,7 @@ export const registerUser = async (
       incomes: [],
       incomesCategories: [],
       notes: [],
+      createdAt: new Date().toISOString(),
     });
 
     localStorage.setItem("token", userCredential.user.uid);

@@ -23,6 +23,8 @@ export const userSlice = createSlice({
       state.income = actions.payload.income;
       state.incomeCategories = actions.payload.incomeCategories;
       state.notes = actions.payload.notes;
+      state.createdAt = actions.payload.createdAt;
+      state.id = actions.payload.id;
     },
     logout(state, actions) {
       return initialState;

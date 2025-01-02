@@ -1,5 +1,6 @@
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { getUser } from "../../firebase";
 
 export const getBudget = (user, valute) => {
   const allIncomeRSD = 0;
@@ -46,31 +47,18 @@ export const getBudget = (user, valute) => {
   }
 };
 
-export const createCategory = async (user, categoryData) => {
+export const createIncomeCategory = async (user, categoryData) => {
   const usersCollection = collection(db, "users");
   const userDoc = doc(usersCollection, user.id);
-
-  const updatedCategories = [...user.incomeCategories, categoryData];
+  const updatedIncomeCategories = [...user.incomeCategories, categoryData];
 
   try {
     await updateDoc(userDoc, {
-      incomeCategories: updatedCategories,
+      incomeCategories: updatedIncomeCategories,
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-export const createIncome = async (user, incomeData) => {
-  const usersCollection = collection(db, "users");
-  const userDoc = doc(usersCollection, user.id);
-
-  const updatedIncomes = [...user.incomes, incomeData];
-
-  try {
-    await updateDoc(userDoc, {
-      incomes: updatedIncomes,
-    });
+    alert(`Category "${categoryData.name}" created successfully`);
+    getUser();
   } catch (error) {
     console.log(error);
   }

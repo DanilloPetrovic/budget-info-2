@@ -23,7 +23,10 @@ export const getUser = async () => {
   const token = localStorage.getItem("token");
   try {
     const data = await getDocs(collection(db, "users"));
-    const filteredData = data.docs.map((doc) => doc.data());
+    const filteredData = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
     const myProfile = filteredData.find((user) => user.uid === token);
     if (myProfile) {
       store.dispatch(
@@ -34,8 +37,10 @@ export const getUser = async () => {
           expenses: myProfile.expenses,
           expensesCategories: myProfile.expensesCategories,
           income: myProfile.incomes,
-          incomeCategories: myProfile.incomesCategories,
+          incomeCategories: myProfile.incomeCategories,
           notes: myProfile.notes,
+          createdAt: myProfile.createdAt,
+          id: myProfile.id,
         })
       );
     }
