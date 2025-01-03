@@ -4,6 +4,7 @@ import { getBudget } from "../../pages/Home/HomeFunctions";
 
 const Budget = ({ user }) => {
   const [currency, setCurrency] = useState("RSD");
+
   return (
     <div>
       <Box
@@ -75,7 +76,7 @@ const Budget = ({ user }) => {
             }}
           >
             All time income: {user && getBudget(user, currency).income}{" "}
-            {currency}
+            {currency === "RSD" ? "din" : currency === "EUR" ? "€" : "$"}
           </Typography>
           <Typography
             variant="h6"
@@ -86,7 +87,7 @@ const Budget = ({ user }) => {
             }}
           >
             All time expenses: {user && getBudget(user, currency).expenses}{" "}
-            {currency}
+            {currency === "RSD" ? "din" : currency === "EUR" ? "€" : "$"}
           </Typography>
           <Typography
             variant="h6"
@@ -97,7 +98,7 @@ const Budget = ({ user }) => {
             }}
           >
             All time balance: {user && getBudget(user, currency).balance}{" "}
-            {currency}
+            {currency === "RSD" ? "din" : currency === "EUR" ? "€" : "$"}
           </Typography>
         </Box>
       </Box>

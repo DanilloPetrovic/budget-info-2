@@ -3,46 +3,46 @@ import { db } from "../../firebase";
 import { getUser } from "../../firebase";
 
 export const getBudget = (user, valute) => {
-  const allIncomeRSD = 0;
-  const allSpentRSD = 0;
+  let allIncomeRSD = 0;
+  let allSpentRSD = 0;
 
   user.income.forEach((income) => {
-    if (income.valute === "RSD") {
+    if (income.currency === "RSD") {
       allIncomeRSD += income.amount;
-    } else if (income.valute === "EUR") {
+    } else if (income.currency === "EUR") {
       allIncomeRSD += income.amount * 117.5;
-    } else if (income.valute === "USD") {
+    } else if (income.curren === "USD") {
       allIncomeRSD += income.amount * 106.5;
     }
   });
 
   user.expenses.forEach((expense) => {
-    if (expense.valute === "RSD") {
+    if (expense.curren === "RSD") {
       allSpentRSD += expense.amount;
-    } else if (expense.valute === "EUR") {
+    } else if (expense.curren === "EUR") {
       allSpentRSD += expense.amount * 117.5;
-    } else if (expense.valute === "USD") {
+    } else if (expense.curren === "USD") {
       allSpentRSD += expense.amount * 106.5;
     }
   });
 
   if (valute === "RSD") {
     return {
-      income: allIncomeRSD,
-      expenses: allSpentRSD,
-      balance: allIncomeRSD - allSpentRSD,
+      income: Math.round(allIncomeRSD),
+      expenses: Math.round(allSpentRSD),
+      balance: Math.round(allIncomeRSD - allSpentRSD),
     };
   } else if (valute === "EUR") {
     return {
-      income: allIncomeRSD / 117.5,
-      expenses: allSpentRSD / 117.5,
-      balance: allIncomeRSD / 117.5 - allSpentRSD / 117.5,
+      income: Math.round(allIncomeRSD / 117.5),
+      expenses: Math.round(allSpentRSD / 117.5),
+      balance: Math.round((allIncomeRSD - allSpentRSD) / 117.5),
     };
   } else if (valute === "USD") {
     return {
-      income: allIncomeRSD / 106.5,
-      expenses: allSpentRSD / 106.5,
-      balance: allIncomeRSD / 106.5 - allSpentRSD / 106.5,
+      income: Math.round(allIncomeRSD / 106.5),
+      expenses: Math.round(allSpentRSD / 106.5),
+      balance: Math.round((allIncomeRSD - allSpentRSD) / 106.5),
     };
   }
 };
@@ -58,6 +58,23 @@ export const createIncomeCategory = async (user, categoryData) => {
     });
 
     alert(`Category "${categoryData.name}" created successfully`);
+    getUser();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createIncome = async (user, incomeData) => {
+  const usersCollection = collection(db, "users");
+  const userDoc = doc(usersCollection, user.id);
+  const updatedIncome = [...user.income, incomeData];
+
+  try {
+    await updateDoc(userDoc, {
+      income: updatedIncome,
+    });
+
+    alert(`Income created successfully`);
     getUser();
   } catch (error) {
     console.log(error);

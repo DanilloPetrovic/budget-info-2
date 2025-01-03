@@ -31,7 +31,6 @@ const Notes = ({ user }) => {
           sx={{
             textDecoration: "none",
             color: "primary.greyText",
-            fontWeight: "light",
             cursor: "pointer",
             fontSize: "1rem",
             marginTop: "20px",

@@ -21,6 +21,8 @@ export const auth = getAuth(app);
 
 export const getUser = async () => {
   const token = localStorage.getItem("token");
+  if (!token) return null;
+
   try {
     const data = await getDocs(collection(db, "users"));
     const filteredData = data.docs.map((doc) => ({
@@ -28,17 +30,18 @@ export const getUser = async () => {
       id: doc.id,
     }));
     const myProfile = filteredData.find((user) => user.uid === token);
+
     if (myProfile) {
       store.dispatch(
         userSlice.actions.setData({
           uid: myProfile.uid,
           username: myProfile.name,
           email: myProfile.email,
-          expenses: myProfile.expenses,
-          expensesCategories: myProfile.expensesCategories,
-          income: myProfile.incomes,
-          incomeCategories: myProfile.incomeCategories,
-          notes: myProfile.notes,
+          expenses: myProfile.expenses || [],
+          expensesCategories: myProfile.expensesCategories || [],
+          income: myProfile.income || [],
+          incomeCategories: myProfile.incomeCategories || [],
+          notes: myProfile.notes || [],
           createdAt: myProfile.createdAt,
           id: myProfile.id,
         })
@@ -46,6 +49,7 @@ export const getUser = async () => {
     }
     return myProfile;
   } catch (error) {
-    console.error(error);
+    console.error("Greška pri dobijanju korisnika:", error);
+    return null;
   }
 };

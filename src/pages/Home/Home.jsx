@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { Navigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
@@ -7,13 +7,25 @@ import Sidebar from "../../components/Sidebar";
 import Budget from "../../components/HomeComponents/Budget";
 import Notes from "../../components/HomeComponents/Notes";
 import AddIncome from "../../components/HomeComponents/AddIncome";
+import { getUser } from "../../firebase";
+import Loading from "../../components/Loading";
 
 const Home = () => {
   const token = localStorage.getItem("token");
   const user = useSelector((state) => state.user);
 
+  useEffect(() => {
+    if (token && (!user.uid || !user.username)) {
+      getUser();
+    }
+  }, [token, user]);
+
   if (!token) {
     return <Navigate to="/register" replace={true} />;
+  }
+
+  if (user.uid === null) {
+    return <Loading />;
   }
 
   return (
