@@ -10,6 +10,7 @@ import {
 import React from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import DescriptionIcon from "@mui/icons-material/Description";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import Divider from "@mui/material/Divider";
@@ -23,23 +24,32 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  console.log(user);
+
   const upper = [
     {
       icon: HomeIcon,
       name: "Home",
+      path: "/",
     },
     {
       icon: MonetizationOnIcon,
       name: "Expenses",
+      path: "/expenses",
+    },
+    {
+      icon: PointOfSaleIcon,
+      name: "Incomes",
+      path: "/incomes",
     },
     {
       icon: DescriptionIcon,
       name: "Add note",
+      path: "/add-note",
     },
     {
       icon: FormatListNumberedIcon,
       name: "To Do",
+      path: "/todo",
     },
   ];
 
@@ -47,10 +57,12 @@ const Sidebar = () => {
     {
       icon: SettingsIcon,
       name: "Settings",
+      path: "/settings",
     },
     {
       icon: AccountCircleIcon,
       name: "Profile",
+      path: `/profile/${user.name}`,
     },
   ];
 
@@ -69,7 +81,7 @@ const Sidebar = () => {
         <List>
           {upper.map((listitem) => (
             <ListItem disablePadding key={listitem.name}>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate(listitem.path)}>
                 <ListItemIcon>
                   <listitem.icon
                     fontSize="large"

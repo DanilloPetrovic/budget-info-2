@@ -25,6 +25,7 @@ export const userSlice = createSlice({
       state.notes = actions.payload.notes;
       state.createdAt = actions.payload.createdAt;
       state.id = actions.payload.id;
+      state.toDo = actions.payload.toDo;
     },
     logout(state, actions) {
       return initialState;

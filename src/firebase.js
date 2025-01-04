@@ -44,6 +44,7 @@ export const getUser = async () => {
           notes: myProfile.notes || [],
           createdAt: myProfile.createdAt,
           id: myProfile.id,
+          toDo: myProfile.toDo || [],
         })
       );
     }

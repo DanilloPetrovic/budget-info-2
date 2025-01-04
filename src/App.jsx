@@ -7,7 +7,7 @@ import theme from "./styles/darkTheme";
 import { getUser } from "./firebase";
 import { useEffect } from "react";
 import AddNote from "./pages/AddNote/AddNote";
-
+import ToDo from "./pages/AddToDo/ToDo";
 function App() {
   useEffect(() => {
     getUser();
@@ -21,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/add-note" element={<AddNote />} />
+          <Route path="/todo" element={<ToDo />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

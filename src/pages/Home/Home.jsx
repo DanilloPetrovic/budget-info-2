@@ -7,8 +7,9 @@ import Sidebar from "../../components/Sidebar";
 import Budget from "../../components/HomeComponents/Budget";
 import Notes from "../../components/HomeComponents/Notes";
 import AddIncome from "../../components/HomeComponents/AddIncome";
-import { getUser } from "../../firebase";
+import ToDoHome from "../../components/ToDoComponents/ToDoHome";
 import Loading from "../../components/Loading";
+import { getUser } from "../../firebase";
 
 const Home = () => {
   const token = localStorage.getItem("token");
@@ -66,7 +67,9 @@ const Home = () => {
 
           <AddIncome user={user} />
         </Box>
-        <Box sx={{ width: "50%", height: "100vh" }}></Box>
+        <Box sx={{ width: "50%", height: "100vh", marginTop: "100px" }}>
+          <ToDoHome user={user} />
+        </Box>
       </Box>
     </Box>
   );

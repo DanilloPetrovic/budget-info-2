@@ -54,7 +54,7 @@ const AddIncome = ({ user }) => {
         amount: "",
         message: "",
         currency: "RSD",
-        date: new Date().toISOString(),
+        date: new Date(),
         category: categories.length > 0 ? categories[0].name : "",
       };
       resetForm({ values: newInitialValues });
@@ -229,6 +229,7 @@ const AddIncome = ({ user }) => {
             "& .MuiFormHelperText-root": {
               color: "primary.contrastText",
             },
+            width: "50%",
           }}
         />
 
@@ -237,6 +238,7 @@ const AddIncome = ({ user }) => {
           variant="contained"
           color="primary"
           onClick={formik.handleSubmit}
+          sx={{ width: "50%" }}
         >
           Add income
         </Button>

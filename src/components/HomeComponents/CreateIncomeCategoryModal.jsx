@@ -38,9 +38,9 @@ const CreateIncomeCategoryModal = ({ user, isOpen, setIsOpen }) => {
             color: "primary.contrastText",
           }}
         >
-          <Typography variant="h6">Dodaj novu kategoriju</Typography>
+          <Typography variant="h6">Add new category</Typography>
           <TextField
-            label="Ime"
+            label="Category name"
             name="name"
             value={newCategoryFormik.values.name}
             onChange={newCategoryFormik.handleChange}

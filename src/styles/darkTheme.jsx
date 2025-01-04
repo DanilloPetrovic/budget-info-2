@@ -15,6 +15,7 @@ const theme = createTheme({
       default: "#222831", // Pozadina aplikacije
       paper: "#31363F", // Pozadina elemenata poput kartica
       inputHover: "#3e444f",
+      card: "#3e444f",
     },
   },
   typography: {
