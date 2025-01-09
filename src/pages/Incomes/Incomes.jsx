@@ -3,19 +3,22 @@ import {
   Box,
   Typography,
   Button,
-  Card,
-  CardContent,
-  CardActions,
   Grid,
+  Select,
+  MenuItem,
+  FormControl,
 } from "@mui/material";
 import Sidebar from "../../components/Sidebar";
 import { useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 import { Navigate } from "react-router-dom";
+import IncomeCard from "../../components/IncomesComponents/IncomeCard";
 import { getUser } from "../../firebase";
-import { convertTime } from "../AddToDo/ToDoFunctions";
 
 const Incomes = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const categories = useSelector((state) => state.user.incomeCategories);
   const token = localStorage.getItem("token");
   const user = useSelector((state) => state.user);
 
@@ -32,6 +35,10 @@ const Incomes = () => {
   if (user.uid === null) {
     return <Loading />;
   }
+
+  const filteredIncomes = user?.income?.filter((income) =>
+    selectedCategory === "All" ? true : income.category === selectedCategory
+  );
 
   return (
     <Box
@@ -79,6 +86,47 @@ const Incomes = () => {
               Add income
             </Button>
           </Box>
+          <FormControl
+            sx={{
+              minWidth: 120,
+              color: "primary.contrastText",
+              marginTop: "50px",
+              width: "25%",
+            }}
+          >
+            <Select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              sx={{
+                color: "primary.contrastText",
+                bgcolor: "background.paper",
+              }}
+            >
+              <MenuItem
+                value="All"
+                sx={{
+                  color: "primary.contrastText",
+                  bgcolor: "background.paper",
+                }}
+              >
+                All
+              </MenuItem>
+              {categories.length > 0
+                ? categories.map((category) => (
+                    <MenuItem
+                      key={category.id}
+                      value={category.name}
+                      sx={{
+                        color: "primary.contrastText",
+                        bgcolor: "background.paper",
+                      }}
+                    >
+                      {category.name}
+                    </MenuItem>
+                  ))
+                : null}
+            </Select>
+          </FormControl>
 
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
@@ -91,58 +139,30 @@ const Incomes = () => {
                 marginTop: "25px",
               }}
             >
-              {user?.income.length > 0 ? (
-                user.income.map((income) => (
-                  <Grid item xs={12} sm={6} key={income.id}>
-                    <Card sx={{ width: "100%", marginBottom: "20px" }}>
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="h4"
-                          component="div"
-                          sx={{
-                            color: "primary.contrastText",
-                            marginBottom: "0px",
-                          }}
-                        >
-                          {income.category}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            color: "primary.greyText",
-                            fontSize: "1.4rem",
-                            fontWeight: "light",
-                          }}
-                        >
-                          {income.message}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            color: "primary.greyText",
-                            fontSize: "1rem",
-                            fontWeight: "light",
-                          }}
-                        >
-                          {income.amount} {income.currency}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            color: "primary.greyText",
-                            fontSize: "1rem",
-                            fontWeight: "light",
-                          }}
-                        >
-                          {convertTime(income.date)}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
+              {filteredIncomes?.length > 0 ? (
+                filteredIncomes.map((income) => (
+                  <IncomeCard key={income.id} user={user} income={income} />
                 ))
               ) : (
-                <Typography variant="h4">You have no incomes yet.</Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
+                    marginTop: "50px",
+                  }}
+                >
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: "primary.contrastText",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    You have no incomes yet.
+                  </Typography>
+                </Box>
               )}
             </Grid>
           </Box>
