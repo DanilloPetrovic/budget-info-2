@@ -14,6 +14,7 @@ import Loading from "../../components/Loading";
 import { Navigate } from "react-router-dom";
 import IncomeCard from "../../components/IncomesComponents/IncomeCard";
 import { getUser } from "../../firebase";
+import AllCategories from "../../components/IncomesComponents/AllCategories";
 
 const Incomes = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,12 +22,19 @@ const Incomes = () => {
   const categories = useSelector((state) => state.user.incomeCategories);
   const token = localStorage.getItem("token");
   const user = useSelector((state) => state.user);
+  const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
 
   useEffect(() => {
     if (token && (!user.uid || !user.username)) {
       getUser();
     }
   }, [token, user]);
+
+  useEffect(() => {
+    if (!selectedCategory) {
+      setSelectedCategory("All");
+    }
+  }, [selectedCategory]);
 
   if (!token) {
     return <Navigate to="/register" replace={true} />;
@@ -37,7 +45,9 @@ const Incomes = () => {
   }
 
   const filteredIncomes = user?.income?.filter((income) =>
-    selectedCategory === "All" ? true : income.category === selectedCategory
+    !selectedCategory || selectedCategory === "All"
+      ? true
+      : income.category === selectedCategory
   );
 
   return (
@@ -86,47 +96,77 @@ const Incomes = () => {
               Add income
             </Button>
           </Box>
-          <FormControl
+          <Box
             sx={{
-              minWidth: 120,
-              color: "primary.contrastText",
+              display: "flex",
+              justifyContent: "start",
+              alignItems: "center",
+              gap: "20px",
               marginTop: "50px",
-              width: "25%",
             }}
           >
-            <Select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+            <FormControl
               sx={{
+                minWidth: 120,
                 color: "primary.contrastText",
-                bgcolor: "background.paper",
+                width: "25%",
               }}
             >
-              <MenuItem
-                value="All"
+              <Select
+                value={selectedCategory || "All"}
+                onChange={(e) => setSelectedCategory(e.target.value)}
                 sx={{
                   color: "primary.contrastText",
                   bgcolor: "background.paper",
                 }}
               >
-                All
-              </MenuItem>
-              {categories.length > 0
-                ? categories.map((category) => (
-                    <MenuItem
-                      key={category.id}
-                      value={category.name}
-                      sx={{
-                        color: "primary.contrastText",
-                        bgcolor: "background.paper",
-                      }}
-                    >
-                      {category.name}
-                    </MenuItem>
-                  ))
-                : null}
-            </Select>
-          </FormControl>
+                <MenuItem
+                  value="All"
+                  sx={{
+                    color: "primary.contrastText",
+                    bgcolor: "background.paper",
+                  }}
+                >
+                  All
+                </MenuItem>
+                {categories.length > 0
+                  ? categories.map((category) => (
+                      <MenuItem
+                        key={category.id}
+                        value={category.name}
+                        sx={{
+                          color: "primary.contrastText",
+                          bgcolor: "background.paper",
+                        }}
+                      >
+                        {category.name}
+                      </MenuItem>
+                    ))
+                  : null}
+              </Select>
+            </FormControl>
+
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ width: "20%" }}
+              onClick={() => setIsAllCategoriesOpen(true)}
+            >
+              See all categories
+            </Button>
+
+            <AllCategories
+              user={user}
+              isOpen={isAllCategoriesOpen}
+              onClose={() => setIsAllCategoriesOpen(false)}
+            />
+          </Box>
+          <Typography
+            variant="h4"
+            sx={{ color: "primary.contrastText", mt: 4 }}
+          >
+            Total income ({selectedCategory || "All"}): dodati ukupan priliv
+          </Typography>
 
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
