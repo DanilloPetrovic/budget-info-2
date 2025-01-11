@@ -33,3 +33,25 @@ export const deleteCategory = async (user, category) => {
     }
   }
 };
+
+export const getTotalIncome = (user, incomes, currency) => {
+  let total = 0;
+
+  incomes.forEach((income) => {
+    if (income.currency === "RSD") {
+      total += income.amount;
+    } else if (income.currency === "EUR") {
+      total += income.amount * 117.5;
+    } else if (income.currency === "USD") {
+      total += income.amount * 108.5;
+    }
+  });
+
+  if (currency === "RSD") {
+    return Math.round(total);
+  } else if (currency === "EUR") {
+    return Math.round(total / 117.5);
+  } else if (currency === "USD") {
+    return Math.round(total / 108.5);
+  }
+};

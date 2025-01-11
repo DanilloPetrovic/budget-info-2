@@ -15,6 +15,9 @@ import { Navigate } from "react-router-dom";
 import IncomeCard from "../../components/IncomesComponents/IncomeCard";
 import { getUser } from "../../firebase";
 import AllCategories from "../../components/IncomesComponents/AllCategories";
+import CreateIncomeCategoryModal from "../../components/HomeComponents/CreateIncomeCategoryModal";
+import { getTotalIncome } from "./IncomesFunctions";
+import SelectCurrency from "../../components/SelectCurrency";
 
 const Incomes = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +26,7 @@ const Incomes = () => {
   const token = localStorage.getItem("token");
   const user = useSelector((state) => state.user);
   const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("RSD");
 
   useEffect(() => {
     if (token && (!user.uid || !user.username)) {
@@ -73,7 +77,7 @@ const Incomes = () => {
       >
         <Typography
           variant="h3"
-          sx={{ color: "primary.contrastText", fontWeight: "bold", mb: 4 }}
+          sx={{ color: "primary.contrastText", fontWeight: "bold" }}
         >
           Incomes
         </Typography>
@@ -81,21 +85,39 @@ const Incomes = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            paddingTop: "50px",
+            justifyContent: "start",
+            alignItems: "center",
+            gap: "15px",
+            marginTop: "20px",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ width: "25%" }}
-              onClick={() => setIsOpen(true)}
-            >
-              Add income
-            </Button>
-          </Box>
+          <Button variant="contained" color="primary">
+            Add income
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setIsOpen(true)}
+          >
+            Add category
+          </Button>
+
+          <CreateIncomeCategoryModal
+            user={user}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "center" }}></Box>
           <Box
             sx={{
               display: "flex",
@@ -161,12 +183,31 @@ const Incomes = () => {
               onClose={() => setIsAllCategoriesOpen(false)}
             />
           </Box>
-          <Typography
-            variant="h4"
-            sx={{ color: "primary.contrastText", mt: 4 }}
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "start",
+              gap: "10px",
+              alignItems: "center",
+              mt: "50px",
+            }}
           >
-            Total income ({selectedCategory || "All"}): dodati ukupan priliv
-          </Typography>
+            <Typography variant="h4" sx={{ color: "primary.contrastText" }}>
+              Total income ({selectedCategory || "All"}):{" "}
+              {getTotalIncome(user, filteredIncomes, selectedCurrency)}
+              {selectedCurrency === "RSD"
+                ? "din"
+                : selectedCurrency === "EUR"
+                ? "€"
+                : "$"}
+            </Typography>
+
+            <SelectCurrency
+              selectedCurrency={selectedCurrency}
+              setSelectedCurrency={setSelectedCurrency}
+            />
+          </Box>
 
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
