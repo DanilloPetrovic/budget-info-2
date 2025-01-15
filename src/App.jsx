@@ -8,6 +8,8 @@ import { getUser } from "./firebase";
 import { useEffect } from "react";
 import AddNote from "./pages/AddNote/AddNote";
 import ToDo from "./pages/AddToDo/ToDo";
+import Incomes from "./pages/Incomes/Incomes";
+
 function App() {
   useEffect(() => {
     getUser();
@@ -22,6 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/add-note" element={<AddNote />} />
           <Route path="/todo" element={<ToDo />} />
+          <Route path="/incomes" element={<Incomes />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

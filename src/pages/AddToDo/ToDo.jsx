@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { getUser } from "../../firebase";
 import { useEffect } from "react";
-import { Card, CardContent, CardActions, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import ToDoModal from "../../components/ToDoComponents/ToDoModal";
 import Loading from "../../components/Loading";
 import ToDoList from "./ToDoList";
