@@ -50,6 +50,18 @@ export const getBudget = (user, valute) => {
 export const createIncomeCategory = async (user, categoryData) => {
   const usersCollection = collection(db, "users");
   const userDoc = doc(usersCollection, user.id);
+
+  const categoryExists = user.incomeCategories.some(
+    (category) =>
+      category.name.toLowerCase().trim() ===
+      categoryData.name.toLowerCase().trim()
+  );
+
+  if (categoryExists) {
+    alert(`Category "${categoryData.name}" already exists`);
+    return;
+  }
+
   const updatedIncomeCategories = [...user.incomeCategories, categoryData];
 
   try {

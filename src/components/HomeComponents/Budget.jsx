@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Select, MenuItem, FormControl } from "@mui/material";
 import { getBudget } from "../../pages/Home/HomeFunctions";
+import SelectCurrency from "../SelectCurrency";
 
 const Budget = ({ user }) => {
   const [currency, setCurrency] = useState("RSD");
@@ -25,44 +26,10 @@ const Budget = ({ user }) => {
             Budget
           </Typography>
 
-          <FormControl sx={{ minWidth: 120, color: "primary.contrastText" }}>
-            <Select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-              sx={{
-                color: "primary.contrastText",
-                bgcolor: "background.paper",
-              }}
-            >
-              <MenuItem
-                value="RSD"
-                sx={{
-                  color: "primary.contrastText",
-                  bgcolor: "background.paper",
-                }}
-              >
-                RSD
-              </MenuItem>
-              <MenuItem
-                value="EUR"
-                sx={{
-                  color: "primary.contrastText",
-                  bgcolor: "background.paper",
-                }}
-              >
-                EUR
-              </MenuItem>
-              <MenuItem
-                value="USD"
-                sx={{
-                  color: "primary.contrastText",
-                  bgcolor: "background.paper",
-                }}
-              >
-                USD
-              </MenuItem>
-            </Select>
-          </FormControl>
+          <SelectCurrency
+            selectedCurrency={currency}
+            setSelectedCurrency={setCurrency}
+          />
         </Box>
 
         <Box>
