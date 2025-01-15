@@ -18,6 +18,7 @@ import AllCategories from "../../components/IncomesComponents/AllCategories";
 import CreateIncomeCategoryModal from "../../components/HomeComponents/CreateIncomeCategoryModal";
 import { getTotalIncome } from "./IncomesFunctions";
 import SelectCurrency from "../../components/SelectCurrency";
+import IncomeModal from "../../components/IncomesComponents/IncomeModal";
 
 const Incomes = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +28,7 @@ const Incomes = () => {
   const user = useSelector((state) => state.user);
   const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("RSD");
+  const [openIncomeModal, setOpenIncomeModal] = useState(false);
 
   useEffect(() => {
     if (token && (!user.uid || !user.username)) {
@@ -91,9 +93,19 @@ const Incomes = () => {
             marginTop: "20px",
           }}
         >
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setOpenIncomeModal(true)}
+          >
             Add income
           </Button>
+
+          <IncomeModal
+            user={user}
+            isOpen={openIncomeModal}
+            onClose={() => setOpenIncomeModal(false)}
+          />
 
           <Button
             variant="contained"
@@ -208,6 +220,13 @@ const Incomes = () => {
               setSelectedCurrency={setSelectedCurrency}
             />
           </Box>
+
+          <Typography
+            variant="h4"
+            sx={{ color: "primary.contrastText", fontSize: "1rem" }}
+          >
+            (click on card to delete)
+          </Typography>
 
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}

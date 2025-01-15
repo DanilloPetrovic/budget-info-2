@@ -55,3 +55,22 @@ export const getTotalIncome = (user, incomes, currency) => {
     return Math.round(total / 108.5);
   }
 };
+
+export const handleDeleteIncome = async (user, incomeId) => {
+  const usersCollection = collection(db, "users");
+  const userDoc = doc(usersCollection, user.id);
+
+  const updatedIncomes = user.income.filter((income) => income.id !== incomeId);
+
+  if (window.confirm("Are you sure you want to delete this income?")) {
+    try {
+      await updateDoc(userDoc, {
+        income: updatedIncomes,
+      });
+
+      getUser();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};

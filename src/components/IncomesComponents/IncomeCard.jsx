@@ -1,10 +1,20 @@
 import React from "react";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
 import { convertTime } from "../../pages/AddToDo/ToDoFunctions";
+import { handleDeleteIncome } from "../../pages/Incomes/IncomesFunctions";
 
 const IncomeCard = ({ user, income }) => {
   return (
-    <Grid item xs={12} sm={6} key={income.id}>
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      key={income.id}
+      sx={{ cursor: "pointer" }}
+      onClick={() => {
+        handleDeleteIncome(user, income.id);
+      }}
+    >
       <Card sx={{ width: "100%", marginBottom: "20px" }}>
         <CardContent>
           <Typography
