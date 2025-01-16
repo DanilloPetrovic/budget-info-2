@@ -19,6 +19,7 @@ import CreateIncomeCategoryModal from "../../components/HomeComponents/CreateInc
 import { getTotalIncome } from "./IncomesFunctions";
 import SelectCurrency from "../../components/SelectCurrency";
 import IncomeModal from "../../components/IncomesComponents/IncomeModal";
+import IncomeFilters from "../../components/IncomesComponents/IncomeFilters";
 
 const Incomes = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +30,7 @@ const Incomes = () => {
   const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("RSD");
   const [openIncomeModal, setOpenIncomeModal] = useState(false);
+  const [searchInputValue, setSearchInputValue] = useState("");
 
   useEffect(() => {
     if (token && (!user.uid || !user.username)) {
@@ -50,11 +52,16 @@ const Incomes = () => {
     return <Loading />;
   }
 
-  const filteredIncomes = user?.income?.filter((income) =>
-    !selectedCategory || selectedCategory === "All"
-      ? true
-      : income.category === selectedCategory
-  );
+  const filteredIncomes = user?.income?.filter((income) => {
+    const matchesCategory =
+      !selectedCategory ||
+      selectedCategory === "All" ||
+      income.category === selectedCategory;
+    const matchesSearch = income.message
+      .toLowerCase()
+      .includes(searchInputValue.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <Box
@@ -195,7 +202,6 @@ const Incomes = () => {
               onClose={() => setIsAllCategoriesOpen(false)}
             />
           </Box>
-
           <Box
             sx={{
               display: "flex",
@@ -220,13 +226,18 @@ const Incomes = () => {
               setSelectedCurrency={setSelectedCurrency}
             />
           </Box>
-
           <Typography
             variant="h4"
             sx={{ color: "primary.contrastText", fontSize: "1rem" }}
           >
             (click on card to delete)
           </Typography>
+
+          <IncomeFilters
+            user={user}
+            searchInputValue={searchInputValue}
+            setSearchInputValue={setSearchInputValue}
+          />
 
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
