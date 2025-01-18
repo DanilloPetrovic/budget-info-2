@@ -74,3 +74,43 @@ export const handleDeleteIncome = async (user, incomeId) => {
     }
   }
 };
+
+export const incomeFiltersFunctions = (
+  user,
+  selectedCategory,
+  selectedDate,
+  searchInputValue
+) => {
+  const filteredIncomes = user?.income?.filter((income) => {
+    const matchesCategory =
+      !selectedCategory ||
+      selectedCategory === "All" ||
+      income.category === selectedCategory;
+    const matchesSearch = income.message
+      .toLowerCase()
+      .includes(searchInputValue.toLowerCase());
+
+    const incomeDate = new Date(income.date);
+    const today = new Date();
+    const startOfYear = new Date(today.getFullYear(), 0, 1); // Početak godine
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1); // Početak meseca
+    const startOfWeek = new Date(today); // Preserving the original today date
+    startOfWeek.setDate(today.getDate() - today.getDay()); // Početak nedelje (nedelja)
+
+    let matchesDate = false;
+
+    if (selectedDate === "alltime") {
+      matchesDate = true;
+    } else if (selectedDate === "thisweek") {
+      matchesDate = incomeDate >= startOfWeek && incomeDate <= today;
+    } else if (selectedDate === "thismonth") {
+      matchesDate = incomeDate >= startOfMonth && incomeDate <= today;
+    } else if (selectedDate === "thisyear") {
+      matchesDate = incomeDate >= startOfYear && incomeDate <= today;
+    }
+
+    return matchesCategory && matchesSearch && matchesDate;
+  });
+
+  return filteredIncomes;
+};

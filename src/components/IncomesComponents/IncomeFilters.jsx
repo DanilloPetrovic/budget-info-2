@@ -1,13 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Box, Select, TextField, Typography } from "@mui/material";
+import React, { useEffect } from "react";
+import {
+  Box,
+  TextField,
+  Typography,
+  FormControl,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
-const IncomeFilters = ({ user, searchInputValue, setSearchInputValue }) => {
+const IncomeFilters = ({
+  user,
+  searchInputValue,
+  setSearchInputValue,
+  selectedDate,
+  setSelectedDate,
+}) => {
+  const dateFilters = [
+    { message: "All time", value: "alltime" },
+    { message: "This week", value: "thisweek" },
+    { message: "This month", value: "thismonth" },
+    { message: "This year", value: "thisyear" },
+  ];
+
+  useEffect(() => {
+    if (!selectedDate) {
+      setSelectedDate("alltime"); // Postavljanje podrazumevane vrednosti
+    }
+  }, [selectedDate, setSelectedDate]);
+
   return (
-    <Box
-      sx={{
-        marginTop: "20px",
-      }}
-    >
+    <Box sx={{ marginTop: "20px" }}>
       <Typography variant="h4" sx={{ color: "primary.contrastText" }}>
         Filters
       </Typography>
@@ -50,6 +72,30 @@ const IncomeFilters = ({ user, searchInputValue, setSearchInputValue }) => {
             },
           }}
         />
+
+        <FormControl sx={{ minWidth: 120, color: "primary.contrastText" }}>
+          <Select
+            value={selectedDate || "alltime"} // Ako selectedDate nije definisan, podrazumevano je "alltime"
+            onChange={(e) => setSelectedDate(e.target.value)}
+            sx={{
+              color: "primary.contrastText",
+              bgcolor: "background.paper",
+            }}
+          >
+            {dateFilters.map((filter) => (
+              <MenuItem
+                key={filter.value}
+                value={filter.value}
+                sx={{
+                  color: "primary.contrastText",
+                  bgcolor: "background.paper",
+                }}
+              >
+                {filter.message}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
     </Box>
   );

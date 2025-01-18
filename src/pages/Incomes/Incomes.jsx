@@ -20,6 +20,7 @@ import { getTotalIncome } from "./IncomesFunctions";
 import SelectCurrency from "../../components/SelectCurrency";
 import IncomeModal from "../../components/IncomesComponents/IncomeModal";
 import IncomeFilters from "../../components/IncomesComponents/IncomeFilters";
+import { incomeFiltersFunctions } from "./IncomesFunctions";
 
 const Incomes = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,7 @@ const Incomes = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("RSD");
   const [openIncomeModal, setOpenIncomeModal] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     if (token && (!user.uid || !user.username)) {
@@ -52,16 +54,12 @@ const Incomes = () => {
     return <Loading />;
   }
 
-  const filteredIncomes = user?.income?.filter((income) => {
-    const matchesCategory =
-      !selectedCategory ||
-      selectedCategory === "All" ||
-      income.category === selectedCategory;
-    const matchesSearch = income.message
-      .toLowerCase()
-      .includes(searchInputValue.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  const filteredIncomes = incomeFiltersFunctions(
+    user,
+    selectedCategory,
+    selectedDate,
+    searchInputValue
+  );
 
   return (
     <Box
@@ -237,6 +235,8 @@ const Incomes = () => {
             user={user}
             searchInputValue={searchInputValue}
             setSearchInputValue={setSearchInputValue}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
           />
 
           <Box
